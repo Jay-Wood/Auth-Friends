@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import FriendCard from "./FriendCard";
 import { axiosWithAuth } from "./axiosWithAuth";
+import NewFriendForm from "./NewFriendForm";
 
 const FriendsList = props => {
     const [friends, setFriends] = useState([])
@@ -15,10 +16,14 @@ const FriendsList = props => {
             })
             .catch(err => console.log("GET request error: ", err))
         // }
-    }, []);
+    }, [friends.length]);
 
     return (
         <div>
+            <div>
+                <NewFriendForm setFriends={setFriends} />
+            </div>
+
             {friends.map(friend => {
                 return(
                     <div>
