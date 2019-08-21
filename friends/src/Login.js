@@ -14,6 +14,10 @@ const Login = props => {
         })
     }
 
+    const routeToFriends = () => {
+        props.history.push("/PrivateRoute")
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
         console.log("username+pw", credentials.username, credentials.password)
@@ -21,6 +25,7 @@ const Login = props => {
             .post("http://localhost:5000/api/login", credentials)
             .then(res => {
                 localStorage.setItem("token", res.data.payload)
+                routeToFriends()
             })
             .catch(err => console.log("Error", err.response.status, err.response.statusText))
     }
