@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const Login = props => {
     const [credentials, setCredentials] = useState({
@@ -11,6 +12,17 @@ const Login = props => {
         setCredentials({...credentials, 
             [e.target.name]: e.target.value
         })
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        console.log("username+pw", credentials.username, credentials.password)
+        axios
+            .post("http://localhost:5000/api/login", credentials)
+            .then(res => {
+                localStorage.setItem("token", res.data.payload)
+            })
+            .catch(err => console.log("Error", err.response.status, err.response.statusText))
     }
 
     return(
@@ -28,7 +40,7 @@ const Login = props => {
                     value={credentials.password}
                     onChange={handleChange}
                 />
-                <button>Log In</button>
+                <button onClick={handleSubmit}>Log In</button>
             </form>
         </div>
     );
